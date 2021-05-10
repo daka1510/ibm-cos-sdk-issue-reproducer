@@ -1,3 +1,52 @@
+# Reproducer for https://github.com/IBM/ibm-cos-sdk-js/issues/84
+
+## To reproduce the issue in the listed repository
+
+1. clone this repository
+2. run `npm install`
+3. run `npm run start`
+4. open http://localhost:3000/
+5. click "Trigger S3 SDK"
+6. Check console output
+
+```
+Uncaught TypeError: AWS.util.isBrowser is not a function
+    at HttpRequest.getUserAgentHeaderName (http.js:115)
+    at HttpRequest.setUserAgent (http.js:111)
+    at new HttpRequest (http.js:104)
+    at new Request (request.js:323)
+    at features.constructor.makeRequest (service.js:202)
+    at features.constructor.svc.<computed> [as putObject] (service.js:515)
+    at ManagedUpload.nextChunk (managed_upload.js:479)
+    at ManagedUpload.fillBuffer (managed_upload.js:411)
+    at ManagedUpload.send (managed_upload.js:201)
+    at features.constructor.upload (s3.js:1183)
+    at handleClick (App.js:22)
+    at HTMLUnknownElement.callCallback (react-dom.development.js:3945)
+    at Object.invokeGuardedCallbackDev (react-dom.development.js:3994)
+    at invokeGuardedCallback (react-dom.development.js:4056)
+    at invokeGuardedCallbackAndCatchFirstError (react-dom.development.js:4070)
+    at executeDispatch (react-dom.development.js:8243)
+    at processDispatchQueueItemsInOrder (react-dom.development.js:8275)
+    at processDispatchQueue (react-dom.development.js:8288)
+    at dispatchEventsForPlugins (react-dom.development.js:8299)
+    at react-dom.development.js:8508
+    at batchedEventUpdates$1 (react-dom.development.js:22396)
+    at batchedEventUpdates (react-dom.development.js:3745)
+    at dispatchEventForPluginEventSystem (react-dom.development.js:8507)
+    at attemptToDispatchEvent (react-dom.development.js:6005)
+    at dispatchEvent (react-dom.development.js:5924)
+    at unstable_runWithPriority (scheduler.development.js:468)
+    at runWithPriority$1 (react-dom.development.js:11276)
+    at discreteUpdates$1 (react-dom.development.js:22413)
+    at discreteUpdates (react-dom.development.js:3756)
+    at dispatchDiscreteEvent (react-dom.development.js:5889)
+```
+
+Of course, the credentials are not valid but I see the same issue with valid credentials.
+
+---
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -1,5 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+
+import IBMS3 from 'ibm-cos-sdk/clients/s3'
+import logo from './logo.svg';
+
+const handleClick = () => {
+  const s3Params = {
+    tokenManager: {
+      getToken: function () {
+        return { accessToken: "my-token" };
+      }
+    }
+  };
+  const client = new IBMS3(s3Params);
+
+  const uploadOptions = {
+    Bucket: "my-bucket",
+    Key: "my-key",
+    Body: "my-body"
+  };
+
+  client.upload(uploadOptions, (err, result) => {
+    if (err) {
+      console.log("Upload failed.", err);
+      return;
+    }
+    console.log("Upload succeeded.", result)
+  });
+}
 
 function App() {
   return (
@@ -9,6 +36,7 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
+        <button onClick={handleClick}>Trigger S3 SDK</button>
         <a
           className="App-link"
           href="https://reactjs.org"
